@@ -1,0 +1,15 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "To use this skill\r - Use alexa-skills-kit-nodejs-factskill form serverless repo to biuld CloudFormation Stack and then just paste source code\r - Change bucket name in audio paths to your bucket name \r - Every object in bucket must be public\r - Lambda needs write permissions to DynamoDB table\r - Change table name\r - Create your skill using JSON Editor in alexa developer console",
+  "main": "lambda.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ask-sdk": "^2.4.0"
+  }
+}

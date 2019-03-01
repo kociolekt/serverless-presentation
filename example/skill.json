@@ -1,0 +1,66 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "glados quotes",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "enough",
+                        "bye",
+                        "goodbye",
+                        "stop"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "GetNewFactIntent",
+                    "slots": [],
+                    "samples": [
+                        "glados quote",
+                        "quote",
+                        "a glados quote",
+                        "a quote",
+                        "tell me a quote",
+                        "tell me a glados quote",
+                        "give me a quote",
+                        "give me a glados quote",
+                        "tell me something",
+                        "give me something"
+                    ]
+                },
+                {
+                    "name": "SaveItemIntent",
+                    "slots": [
+                        {
+                            "name": "item",
+                            "type": "AMAZON.Color"
+                        }
+                    ],
+                    "samples": [
+                        "add color {item}",
+                        "add {item}",
+                        "add {item} to list ",
+                        "add {item} to my list"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}

@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<section>
+						<h1>Serverless</h1>
+						<h3>Jak żyć bez backendu?</h3>
+						<p>
+							<small>Tomasz Kociołek</small>
+						</p>
+					</section>
+					<section>
+						<h2>Opowiem:</h2>
+						<ul>
+							<li>Co to jest?</li>
+							<li>Jak to działa?</li>
+							<li>Co może?</li>
+							<li>Po co mi to?</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Pokażę:</h2>
+						<ul>
+							<li>Jak skonfigurować</li>
+							<li>Jak pisać serverless.yml</li>
+							<li>Jak developować</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Co to jest?</h1>
+						<p>Framework</p>
+						<img style=" border: 0; background: none; width: 50%; height: 200px; box-shadow: none;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTc3cHgiIGhlaWdodD0iMzBweCIgdmlld0JveD0iMCAwIDE3NyAzMCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDwhLS0gR2VuZXJhdG9yOiBza2V0Y2h0b29sIDUxICg1NzQ2MikgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+Q0VDRkE2QkItOUE5OC00NDRELUE1MDQtRjREQjEzQTIwQTU0PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBza2V0Y2h0b29sLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iTG9nbyI+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTAsMjMuNDgxNDg2OCBMNi42MDAzNDY3MywyMy40ODE0ODY4IEw0LjU1NTE4MjY2LDI5LjY1NjgwNSBMMCwyOS42NTY4MDUgTDAsMjMuNDgxNDg2OCBaIE0wLDExLjc0MDcxMDcgTDEwLjQ4Nzk1MzksMTEuNzQwNzEwNyBMOC40NDMxMTYyNywxNy45MTYwMjkgTDAsMTcuOTE2MDI5IEwwLDExLjc0MDcxMDcgWiBNMCwtNi41Mjg4NTU3NmUtMDUgTDE0LjM3NTU2MTEsLTYuNTI4ODU1NzZlLTA1IEwxMi4zMzA3MjM0LDYuMTc1NTc5MzcgTDAsNi4xNzU1NzkzNyBMMCwtNi41Mjg4NTU3NmUtMDUgWiBNMjAuODgwODQ3NiwtNi41Mjg4NTU3NmUtMDUgTDM3LjI4OTgyMDgsLTYuNTI4ODU1NzZlLTA1IEwzNy4yODk4MjA4LDYuMTc1NTc5MzcgTDE4LjgzNjAxLDYuMTc1NTc5MzcgTDIwLjg4MDg0NzYsLTYuNTI4ODU1NzZlLTA1IFogTTE0Ljk0ODM3MDIsMTcuOTE2MDYxNiBMMTYuOTkzMjA3OCwxMS43NDA3NDM0IEwzNy4yODk3ODgyLDExLjc0MDc0MzQgTDM3LjI4OTc4ODIsMTcuOTE2MDYxNiBMMTQuOTQ4MzcwMiwxNy45MTYwNjE2IFogTTEzLjEwNTQ3MDEsMjMuNDgxNDg2OCBMMzcuMjg5NjU3NiwyMy40ODE0ODY4IEwzNy4yODk2NTc2LDI5LjY1NjgwNSBMMTEuMDYwNjMyNSwyOS42NTY4MDUgTDEzLjEwNTQ3MDEsMjMuNDgxNDg2OCBaIiBpZD0ibG9nby1tYXJrIiBmaWxsPSIjRkQ1NzUwIj48L3BhdGg+CiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNOTQuMzAyMDQxOCwxOC4zMjQ0NDE1IEw5Ny41MjQ2ODUsOC41ODMwNjIyOSBDOTguNDczMDAxMyw4LjU4MzA2MjI5IDk5LjM3MzAwNCw4LjU5MjIwMjY5IDEwMC4yNDcyMTgsOC41OTIyMDI2OSBMOTUuOTU0NDk1MiwyMS4wMTg5MDAzIEw5Mi41NjYwMTksMjEuMDE4OTAwMyBMODguNTE3MTQ5MSw4LjU4MzA2MjI5IEw5MS4zNDQ0NzAxLDguNTgzMDYyMjkgTDk0LjMwMjA0MTgsMTguMzI0NDQxNSBaIE0xMzEuODU1MDczLDIuMzM5MDkzMTUgTDEzMS44NTUwNzMsMTguNjAyNDcyOSBMMTM1LjYxNTY5NCwxOC42MDI0NzI5IEwxMzUuNjE1Njk0LDIxLjAxODgwMjQgTDEyOS4xOTA2NDcsMjEuMDE4ODAyNCBMMTI5LjE5MDY0Nyw0LjU4Njk3ODE5IEwxMjYuNTM2NjY4LDQuNTg2OTc4MTkgTDEyNi41MzY2NjgsMi4zMzkwOTMxNSBMMTMxLjg1NTA3MywyLjMzOTA5MzE1IFogTTExOS4xMDUyOTUsMTAuODgzMjEwOCBDMTE5LjE1OTQ4NSwxMC42NzI2NTUyIDExOS43MjEyOTMsOC40Njk4MTkyOSAxMjEuOTAxNjA0LDguNDY5ODE5MjkgTDEyNS42NDI5NjUsOC40Njk4MTkyOSBMMTI1LjY0Mjk2NSwxMS4xNjIzMTk0IEwxMjEuNDk3NDY4LDExLjE2MjMxOTQgQzEyMC40NzM0MTcsMTEuMTYyMzE5NCAxMTkuMjcxMTI4LDEyLjAyMTUxNjggMTE5LjI3MTEyOCwxMy40MjY4NTMgQzExOS4yNzExMjgsMTMuNDI2ODUzIDExOS4yNTkzNzYsMjAuODExMzE1MyAxMTkuMjU5Mzc2LDIxLjAxODkzMjkgTDExNi41MTcyNTcsMjEuMDE4OTMyOSBMMTE2LjUxNzI1Nyw4LjU1MTEwMzU0IEMxMTcuMzY1MzU1LDguNTUxMTAzNTQgMTE4LjE0MDAwNCw4LjU0NzgzOTExIDExOS4wNTI3MzgsOC41NDc4MzkxMSBMMTE5LjEwNTI5NSwxMC44ODMyMTA4IFogTTE1Ny41Njc4NjIsMTMuNDQ0NzA5NCBDMTU5LjU3MDI2MiwxMy42ODA0MDExIDE2Mi41OTM3NzUsMTQuMDM2ODc2NyAxNjIuNzU1NjkxLDE3LjEyMzcxOTcgQzE2Mi44MzM3MTEsMTguNTczNzc4NSAxNjIuMjU2ODg2LDE5LjQ4MDYzNjYgMTYxLjc2MTAyLDE5Ljk4NjI5NjUgQzE2MC40ODIzNDMsMjEuMjg4NDc2OCAxNTguNDUxODY5LDIxLjM3MzY3ODMgMTU3LjAzNjc0LDIxLjMyNDM4NTUgQzE1NC4yNzMwNzUsMjEuMjI4MDg0OCAxNTEuODk3ODc3LDIwLjA3Mzc4MzEgMTUxLjc5ODMxMiwyMC4wMjQ4MTY3IEwxNTIuOTQ5MDIzLDE3LjY4MzI0MjYgQzE1Mi45NjYzMjQsMTcuNjkxNzMwMSAxNTQuODExMzc5LDE4LjY4MzQ2MzMgMTU2Ljk5NjI2MSwxOC44NDc5OTA1IEMxNjAuMjY3MjE3LDE5LjA5NDQ1NDggMTYwLjI5MjAyNywxNy44MDYzMTE1IDE2MC4yNjM2MjYsMTcuMjYxMTUyMSBDMTYwLjIyNDc4LDE2LjUzNzEwMiAxNTkuNTcyMjIxLDE2LjMwNzkzOTEgMTU3LjI2MzI5MSwxNi4wMzYwMTIzIEMxNTUuMjA5OTY2LDE1Ljc5NDExODIgMTUyLjEwNTgyMSwxNS40Mjg1MDIzIDE1Mi4wMzE3MTksMTIuMTgxMzc1OSBDMTUyLjAwNzU2MiwxMS4xNzkxOTY1IDE1Mi4zNjA0NDcsMTAuMjg4MDA3NyAxNTMuMDUyNTA1LDkuNjA1MDg5MzcgQzE1My45NzY2NjUsOC42OTEzNzYwMSAxNTUuNDg3NDQyLDguMjAxMzg1MzggMTU3LjE5ODMyOSw4LjI2MTEyNDQxIEMxNTkuODEzNzg4LDguMzUyMjAxOTUgMTYyLjA2Mzk1OCw5LjA0NTU2NjQzIDE2Mi4xNTgzLDkuMDc0NjE5ODQgTDE2MS4zODI2NzIsMTEuNTY2MzU3NiBDMTYxLjM2MjQzMywxMS41NjAxNTUyIDE1OS4zNjAwMzMsMTAuOTQ3MDk1NyAxNTcuMTA3NTc4LDEwLjg2ODc0OTQgQzE1Ni4xNTYzMjMsMTAuODM1Nzc4NyAxNTUuMjgzNzQyLDExLjA2Nzg3OTUgMTU0Ljg4NjQ2MSwxMS40NjA1OTAyIEMxNTQuNzA4NTUsMTEuNjM1NTYzNSAxNTQuNjMzNzk0LDExLjgzOTI2MzggMTU0LjYzOTAxNywxMi4xMjEzMTA0IEMxNTQuNjU3NjI0LDEyLjg4MTI2OTIgMTU1LjA0MzE1MywxMy4xNDczMjAxIDE1Ny41Njc4NjIsMTMuNDQ0NzA5NCBaIE0xNzYuMDk1NDE2LDE3LjEyMzU1NjQgQzE3Ni4xNzMxMSwxOC41NzM2MTUzIDE3NS41OTY2MTIsMTkuNDgwNzk5OCAxNzUuMTAwNzQ1LDE5Ljk4NjQ1OTcgQzE3My44MjE3NDIsMjEuMjg4NjQgMTcxLjc5MTI2OCwyMS4zNzM4NDE1IDE3MC4zNzY0NjUsMjEuMzI0MjIyMiBDMTY3LjYxMjgsMjEuMjI3OTIxNiAxNjUuMjM3Mjc2LDIwLjA3MzYxOTkgMTY1LjEzODAzOCwyMC4wMjQ5Nzk5IEwxNjYuMjAwNjA5LDE3Ljg2MjI5NjUgQzE2Ni4yMTgyMzcsMTcuODcwNzg0IDE2OC4xNTA3NzgsMTguNjgzMzAwMSAxNzAuMzM1NjYsMTguODQ3ODI3MiBDMTczLjYwNjYxNiwxOS4wOTQyOTE2IDE3My42MzE3NTIsMTcuODA2NDc0OCAxNzMuNjAzMDI1LDE3LjI2MDk4ODkgQzE3My41NjQ1MDUsMTYuNTM2OTM4OCAxNzIuOTExOTQ2LDE2LjMwODEwMjQgMTcwLjYwMzM0MywxNi4wMzYxNzU1IEMxNjguNTQ5NjkxLDE1Ljc5NDI4MTQgMTY1LjQ0NTU0NywxNS40MjgzMzkgMTY1LjM3MTExOCwxMi4xODE1MzkxIEMxNjUuMzQ3Mjg3LDExLjE3OTAzMzMgMTY1LjcwMDE3MiwxMC4yODgxNzA5IDE2Ni4zOTE5MDQsOS42MDQ5MjYxNSBDMTY3LjMxNjA2NCw4LjY5MTIxMjc5IDE2OC44MjY4NDEsOC4yMDEyMjIxNiAxNzAuNTM4MzgxLDguMjYxMjg3NjQgQzE3My4xNTMxODcsOC4zNTIwMzg3MyAxNzUuNDAzNjg0LDkuMDQ1NDAzMjEgMTc1LjQ5NzY5OSw5LjA3NDc4MzA2IEwxNzQuNzIyMzk4LDExLjU2NjE5NDQgQzE3NC43MDE4MzIsMTEuNTYwMzE4NSAxNzIuNzAxMzksMTAuODY4OTEyNiAxNzAuNDQ3MzAzLDEwLjg2ODkxMjYgQzE2OC40NjAyNDYsMTAuODY4OTEyNiAxNjcuOTc5MDY5LDExLjUwMjUzODEgMTY3Ljk3OTA2OSwxMi4xMjExNDcyIEMxNjcuOTc5MDY5LDEyLjg4MTQzMjQgMTY4LjM4Mjg3OSwxMy4xNDcxNTY4IDE3MC45MDc1ODcsMTMuNDQ0NTQ2MiBDMTcyLjkwOTY2MSwxMy42ODA1NjQ0IDE3NS45MzM1MDEsMTQuMDM2NzEzNCAxNzYuMDk1NDE2LDE3LjEyMzU1NjQgWiBNNTQuOTEzNzE2MSwxMy40NDQ3MDk0IEM1Ni45MTU3ODk3LDEzLjY4MDQwMTEgNTkuOTM5NjI5MywxNC4wMzY4NzY3IDYwLjEwMTU0NDksMTcuMTIzNzE5NyBDNjAuMTc5MjM4MywxOC41NzM3Nzg1IDU5LjYwMjc0MDMsMTkuNDgwNjM2NiA1OS4xMDY4NzM3LDE5Ljk4NjI5NjUgQzU3LjgyNzg3MDksMjEuMjg4NDc2OCA1NS43OTc3MjMyLDIxLjM3MzY3ODMgNTQuMzgyNTkzNywyMS4zMjQzODU1IEM1MS42MTg5MjkxLDIxLjIyODA4NDggNDkuMjQzNDA0OSwyMC4wNzM3ODMxIDQ5LjE0MzgzOTksMjAuMDI0ODE2NyBMNTAuMjk0ODc3MSwxNy42ODMyNDI2IEM1MC4zMTI1MDUsMTcuNjkxNzMwMSA1Mi4xNTY5MDY4LDE4LjY4MzQ2MzMgNTQuMzQyMTE0OCwxOC44NDc5OTA1IEM1Ny42MTI3NDUxLDE5LjA5NDQ1NDggNTcuNjM4MjA3NiwxNy44MDYzMTE1IDU3LjYwOTQ4MDcsMTcuMjYxMTUyMSBDNTcuNTcwNjM0LDE2LjUzNzEwMiA1Ni45MTgwNzQ4LDE2LjMwNzkzOTEgNTQuNjA5MTQ1LDE2LjAzNjAxMjMgQzUyLjU1NTgxOTksMTUuNzk0MTE4MiA0OS40NTE2NzU0LDE1LjQyODUwMjMgNDkuMzc3MjQ2NCwxMi4xODEzNzU5IEM0OS4zNTM0MTYxLDExLjE3OTE5NjUgNDkuNzA2MzAwOCwxMC4yODgwMDc3IDUwLjM5ODAzMyw5LjYwNTA4OTM3IEM1MS4zMjI1MTksOC42OTEzNzYwMSA1Mi44MzI5Njk4LDguMjAxMzg1MzggNTQuNTQ0MTgyOSw4LjI2MTEyNDQxIEM1Ny4xNTkzMTYxLDguMzUyMjAxOTUgNTkuNDA5ODEyNiw5LjA0NTU2NjQzIDU5LjUwMzgyODIsOS4wNzQ2MTk4NCBMNTguNzI4NTI2NiwxMS41NjYzNTc2IEM1OC43MDc5NjA3LDExLjU2MDE1NTIgNTYuNzA2MjEzNSwxMC45NDcwOTU3IDU0LjQ1MzQzMTgsMTAuODY4NzQ5NCBDNTMuNTAxODUxMSwxMC44MzU3Nzg3IDUyLjYyOTI2OTUsMTEuMDY3ODc5NSA1Mi4yMzI2NDE1LDExLjQ2MDU5MDIgQzUyLjA1NDczMDIsMTEuNjM1NTYzNSA1MS45Nzk2NDg0LDExLjgzOTI2MzggNTEuOTg1MTk3OSwxMi4xMjEzMTA0IEM1Mi4wMDMxNTIyLDEyLjg4MTI2OTIgNTIuMzg5MzM0MSwxMy4xNDczMjAxIDU0LjkxMzcxNjEsMTMuNDQ0NzA5NCBaIE0xNDMuNTIzMzQ2LDguMjQyODEwOTcgQzE0OS4zOTg2NjQsOC4yNDI4MTA5NyAxNDkuMzk4NjY0LDE0LjIyMjU5IDE0OS4zOTg2NjQsMTQuMjIyNTkgTDE0OS4zOTg2NjQsMTUuODIyNDg2MSBMMTQwLjA2MzcwNiwxNS44MjI0ODYxIEMxNDAuMDYzNzA2LDE3LjM0MjQwMzcgMTQxLjM5MDY5NiwxOC45NzcyMjkyIDE0My44NTEwOTUsMTguOTc3MjI5MiBDMTQ1LjkwNjcwNSwxOC45NzcyMjkyIDE0OC4wMzgzNzcsMTguMTQ2NDMyMyAxNDguMDM4Mzc3LDE4LjE0NjQzMjMgTDE0OC43MTgzNTcsMjAuMjg0NjMyNSBDMTQ4LjcxODM1NywyMC4yODQ2MzI1IDE0Ni4wOTg5OCwyMS4zMzI1MTM5IDE0My42MzIwNTIsMjEuMzMyNTEzOSBDMTM3Ljc1NDc3NiwyMS4zMzI1MTM5IDEzNy4zMTY2OSwxNi4xMDY4MTc3IDEzNy4zMTY2OSwxNC42OTI5OTQgQzEzNy4zMTY2OSwxMy4yNzgxOTEgMTM4LjMwODc0OSw4LjI0MjgxMDk3IDE0My41MjMzNDYsOC4yNDI4MTA5NyBaIE0xNDYuODYxODc3LDEzLjU2ODM5ODYgQzE0Ni44NjE4NzcsMTMuNTY4Mzk4NiAxNDYuOTgxNjgxLDEwLjYxNDQxNzggMTQzLjUyMzY3MywxMC42MTQ0MTc4IEMxNDAuMzk2MzUxLDEwLjYxNDQxNzggMTQwLjAzMjA0MSwxMy41NjgzOTg2IDE0MC4wMzIwNDEsMTMuNTY4Mzk4NiBMMTQ2Ljg2MTg3NywxMy41NjgzOTg2IFogTTEwNy44MTkyODcsOC4yNDI4MTA5NyBDMTEzLjY5NDkzMSw4LjI0MjgxMDk3IDExMy42OTQ5MzEsMTQuMjIyNTkgMTEzLjY5NDkzMSwxNC4yMjI1OSBMMTEzLjY5NDkzMSwxNS44MjI0ODYxIEwxMDQuMzU5OTczLDE1LjgyMjQ4NjEgQzEwNC4zNTk5NzMsMTcuMzQyNDAzNyAxMDUuNjg3Mjg5LDE4Ljk3NzIyOTIgMTA4LjE0NzY4OCwxOC45NzcyMjkyIEMxMTAuMjAyOTcyLDE4Ljk3NzIyOTIgMTEyLjMzNDY0MywxOC4xNDY0MzIzIDExMi4zMzQ2NDMsMTguMTQ2NDMyMyBMMTEzLjAxNDYyNCwyMC4yODQ2MzI1IEMxMTMuMDE0NjI0LDIwLjI4NDYzMjUgMTEwLjM5NTI0NywyMS4zMzI1MTM5IDEwNy45MjgzMTksMjEuMzMyNTEzOSBDMTAyLjA1MTA0MywyMS4zMzI1MTM5IDEwMS42MTI5NTcsMTYuMTA2ODE3NyAxMDEuNjEyOTU3LDE0LjY5Mjk5NCBDMTAxLjYxMjk1NywxMy4yNzgxOTEgMTAyLjYwNTAxNiw4LjI0MjgxMDk3IDEwNy44MTkyODcsOC4yNDI4MTA5NyBaIE0xMTEuMTU4MTQ0LDEzLjU2ODM5ODYgQzExMS4xNTgxNDQsMTMuNTY4Mzk4NiAxMTEuMjc3OTQ4LDEwLjYxNDQxNzggMTA3LjgxOTk0LDEwLjYxNDQxNzggQzEwNC42OTI2MTgsMTAuNjE0NDE3OCAxMDQuMzI4MzA4LDEzLjU2ODM5ODYgMTA0LjMyODMwOCwxMy41NjgzOTg2IEwxMTEuMTU4MTQ0LDEzLjU2ODM5ODYgWiBNNjguMzg0NTczNiw4LjI0MjgxMDk3IEM3NC4yNjAyMTc0LDguMjQyODEwOTcgNzQuMjYwMjE3NCwxNC4yMjI1OSA3NC4yNjAyMTc0LDE0LjIyMjU5IEw3NC4yNjAyMTc0LDE1LjgyMjQ4NjEgTDY0LjkyNDkzMywxNS44MjI0ODYxIEM2NC45MjQ5MzMsMTcuMzQyNDAzNyA2Ni4yNTIyNDk0LDE4Ljk3NzIyOTIgNjguNzEyNjQ4NiwxOC45NzcyMjkyIEM3MC43Njc5MzI0LDE4Ljk3NzIyOTIgNzIuODk5NjAzOCwxOC4xNDY0MzIzIDcyLjg5OTYwMzgsMTguMTQ2NDMyMyBMNzMuNTc5NTg0MiwyMC4yODQ2MzI1IEM3My41Nzk1ODQyLDIwLjI4NDYzMjUgNzAuOTYwMjA3MiwyMS4zMzI1MTM5IDY4LjQ5MzYwNTUsMjEuMzMyNTEzOSBDNjIuNjE2MzI5NiwyMS4zMzI1MTM5IDYyLjE3NzU5MDUsMTYuMTA2ODE3NyA2Mi4xNzc1OTA1LDE0LjY5Mjk5NCBDNjIuMTc3NTkwNSwxMy4yNzgxOTEgNjMuMTcwMzAzLDguMjQyODEwOTcgNjguMzg0NTczNiw4LjI0MjgxMDk3IFogTTcxLjcyMzQzMDUsMTMuNTY4Mzk4NiBDNzEuNzIzNDMwNSwxMy41NjgzOTg2IDcxLjg0MzIzNSwxMC42MTQ0MTc4IDY4LjM4NTIyNjUsMTAuNjE0NDE3OCBDNjUuMjU3OTA0NiwxMC42MTQ0MTc4IDY0Ljg5MzU5NDUsMTMuNTY4Mzk4NiA2NC44OTM1OTQ1LDEzLjU2ODM5ODYgTDcxLjcyMzQzMDUsMTMuNTY4Mzk4NiBaIE03OS41Njk4NzQ2LDEwLjg4MzIxMDggQzc5LjYyNDA2NDEsMTAuNjcyNjU1MiA4MC4xODU1NDU3LDguNDY5ODE5MjkgODIuMzY2MTgzNSw4LjQ2OTgxOTI5IEw4Ni4xMDc1NDQzLDguNDY5ODE5MjkgTDg2LjEwNzU0NDMsMTEuMTYyMzE5NCBMODEuOTYyMDQ3NCwxMS4xNjIzMTk0IEM4MC45Mzc5OTYzLDExLjE2MjMxOTQgNzkuNzM1NzA3NiwxMi4wMjE1MTY4IDc5LjczNTcwNzYsMTMuNDI2ODUzIEM3OS43MzU3MDc2LDEzLjQyNjg1MyA3OS43MjM2MjkyLDIwLjgxMTMxNTMgNzkuNzIzNjI5MiwyMS4wMTg5MzI5IEw3Ni45ODE4MzYyLDIxLjAxODkzMjkgTDc2Ljk4MTgzNjIsOC41NTExMDM1NCBDNzcuODI5NjA4MSw4LjU1MTEwMzU0IDc4LjYwNDU4MzMsOC41NDc4MzkxMSA3OS41MTczMTczLDguNTQ3ODM5MTEgTDc5LjU2OTg3NDYsMTAuODgzMjEwOCBaIiBpZD0ibG9nb3R5cGUiIGZpbGw9IiNGRkZGRkYiPjwvcGF0aD4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+" height="21px,21px,21px,55px" width="124px,124px,124px,153px" alt="Serverless">
+						<aside class="notes">
+							Co to jest serverless?
+							Jest to:
+							Narzędzie linii komend napisane w nodejs które spełnia funkcje frameworka do zarządzania architektórą aplikacji serverlessowych.
+							No dobrze ale jaką architektórą? Lokalną? Nie chodzi tutaj o lokalne środowiska, tylko o rozwiązania chmurowe od największych dostawców. Z naciskiem na function as a service czyli na przykład lambdę z AWS. Ale AWS to nie jedyny dostawca którego serverless wspiera.
+						</aside>
+					</section>
+					<section>
+						<h1>Co to jest?</h1>
+						<p>Wiele różnych dostawców</p>
+						<img src="img/screenshot_1.png" />
+						<aside class="notes">
+							Jako że serverless jest frameworkiem to wspiera również:
+							- Azure
+							- IBM OpenWhisk
+							- Google Cloud Platform
+							- Kubeless
+							- spotinst
+							- fn
+							- Cloudflare
+							Każdy z dostawców ma własne api do tworzenia usług. Każdy inne.
+							Serverless jest próbą utworzenia swojego rodzaju adaptera tak abyśmy mogli
+							komponować usługi jednego z dostawców przy jak najmniejszym wkładzie własnym.
+						</aside>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Jak to działa?</h1>
+						<p>Orchestrators</p>
+						<ul>
+							<li>AWS CloudFormation</li>
+							<li>IBM Cloud Orchestrator</li>
+							<li>Microsoft Azure Automation</li>
+							<li style="font-size: 50%;">Jest ich dużo wiecej ;)</li>
+						</ul>
+						<aside class="notes">
+							Jak to działa? Serverless jak już wspomniałem korzysta z pewnych api róznych dostawcow. Za tymi api stoją tak zwane orkiestratory (wymienić). Orkiestratory przyjmują pewnego rodzaju definicję stacka czyli wszystkich potrzebnych nam usług/zasobów i włączają/wyłączają je w zależności od tego co jest nam potrzebne. Każdy Orkiestrator przyjmuje opis stacka w innym formacie. Serverless w dużej części odwala za nas część roboty łącząc zasoby z naszymi funkcjami.
+						</aside>
+					</section>
+					<section>
+						<h1>Jak to działa?</h1>
+						<p>Przykład serverless.yml</p>
+						<pre><code data-trim data-noescape>
+service:
+  name: alexa-example # service name - this is going to be part of functions/resource names
+
+provider:
+  name: aws # which cloud provider
+  runtime: nodejs8.10 # what type of runtime https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
+  stage: ${opt:stage, 'dev'} # if it's development version then stage can be dev; prod for production qa/test for testing etc
+  stackName: ${self:service}-${self:provider.stage} # stack definition is remembered under that name
+  region: ${opt:region, 'us-east-1'} # region in which our resources are defined
+  profile: serverless-terminator # The default profile to use with this service
+  iamRoleStatements: # access statemets for this group
+    - Effect: Allow
+  Action:
+    - "dynamodb:PutItem"
+    - "dynamodb:GetItem"
+    - "dynamodb:UpdateItem"
+    - "dynamodb:DeleteItem"
+    - "dynamodb:BatchGetItem"
+    - "dynamodb:BatchWriteItem"
+    - "dynamodb:Query"
+    - "dynamodb:Scan"
+  Resource:
+    - Fn::GetAtt: [ColorsDynamoDBTable, Arn]
+    - Fn::Join:
+      - '/'
+      - - Fn::GetAtt: [ColorsDynamoDBTable, Arn]
+        - '*'
+
+  environment: # predefined environment variables
+    TABLE_NAME:
+      Ref: ColorsDynamoDBTable
+
+  functions: # functions definition
+    skill:
+      handler: index.handler
+      events:
+        - alexaSkill:
+          appId: amzn1.ask.skill.5a265f55-538b-40c8-8663-864cdd578306
+          enabled: true
+
+resources: # CloudFormation resources definition
+  Resources: 
+    ColorsDynamoDBTable: 
+      Type: "AWS::DynamoDB::Table"
+      Properties: 
+        AttributeDefinitions: 
+          - AttributeName: Color
+            AttributeType: S
+        KeySchema: 
+          - AttributeName: Color
+            KeyType: HASH
+        ProvisionedThroughput: 
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        SSESpecification: 
+          SSEEnabled: true
+									</code></pre>
+									<p>
+										<a href="https://console.aws.amazon.com/lambda/home?region=us-east-1#/applications/alexa-example-dev">Powstały stack</a>
+									</p>
+						<aside class="notes">
+							Tu jest przykładowy plik serverless.yml (opisać poszczególne elementy). A tu stack jaki wyprodukował.
+						</aside>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Co może?</h1>
+						<pre><code data-trim data-noescape>
+Commands
+* You can run commands with "serverless" or the shortcut "sls"
+* Pass "--verbose" to this command to get in-depth plugin info
+* Pass "--no-color" to disable CLI colors
+* Pass "--help" after any <command> for contextual help
+
+Framework
+* Documentation: https://serverless.com/framework/docs/
+
+config ........................ Configure Serverless
+config credentials ............ Configures a new provider profile for
+the Serverless Framework
+create ........................ Create new Serverless service
+install ....................... Install a Serverless service from GitHub or a plugin from the Serverless registry
+package ....................... Packages a Serverless service
+deploy ........................ Deploy a Serverless service
+deploy function ............... Deploy a single function from the service
+deploy list ................... List deployed version of your Serverless Service
+deploy list functions ......... List all the deployed functions and their versions
+invoke ........................ Invoke a deployed function
+invoke local .................. Invoke function locally
+info .......................... Display information about the service
+logs .......................... Output the logs of a deployed functionmetrics ....................... Show metrics for a specific function
+print ......................... Print your compiled and resolved config file
+remove ........................ Remove Serverless service and all resources
+rollback ...................... Rollback the Serverless service to a specific deployment
+rollback function ............. Rollback the function to a specific version
+slstats ....................... Enable or disable stats
+plugin ........................ Plugin management for Serverless
+plugin install ................ Install and add a plugin to your service
+plugin uninstall .............. Uninstall and remove a plugin from your service
+						</code></pre>
+						<aside class="notes">
+							Przede wszystkim deploy, logs i invoke. Ale opisać też i inne.
+						</aside>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Po co mi to?</h1>
+						<p>
+							Żeby wiedzieć jak żyć bez backendu.
+							Do pisania skilla alexy też się przyda :)
+						</p>
+					</section>
+				</section>
+				<section>
+					<h2>Pokażę:</h2>
+					<ul>
+						<li>Jak skonfigurować: <a href="https://github.com/kociolekt/cli-alexa-skill/blob/master/NOTES.md">Notatka</a></li>
+						<li>Jak pisać serverless.yml (live code?)</li>
+						<li>Jak developować (live code?)</li>
+					</ul>
+					<aside class="notes">
+						Przede wszystkim deploy, logs i invoke. Ale opisać też i inne.
+					</aside>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,56 @@
+service:
+  name: alexa-example # service name - this is going to be part of functions/resource names
+
+provider:
+  name: aws # which cloud provider
+  runtime: nodejs8.10 # what type of runtime https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
+  stage: ${opt:stage, 'dev'} # if it's development version then stage can be dev; prod for production qa/test for testing etc
+  stackName: ${self:service}-${self:provider.stage} # stack definition is remembered under that name
+  region: ${opt:region, 'us-east-1'} # region in which our resources are defined
+  profile: serverless-terminator # The default profile to use with this service
+  iamRoleStatements: # access statemets for this group
+    - Effect: Allow
+      Action:
+        - "dynamodb:PutItem"
+        - "dynamodb:GetItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:DeleteItem"
+        - "dynamodb:BatchGetItem"
+        - "dynamodb:BatchWriteItem"
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
+      Resource:
+        - Fn::GetAtt: [ColorsDynamoDBTable, Arn]
+        - Fn::Join:
+            - '/'
+            - - Fn::GetAtt: [ColorsDynamoDBTable, Arn]
+              - '*'
+
+  environment: # predefined environment variables
+    TABLE_NAME:
+      Ref: ColorsDynamoDBTable
+
+functions: # functions definition
+  skill:
+    handler: index.handler
+    events:
+      - alexaSkill:
+          appId: amzn1.ask.skill.5a265f55-538b-40c8-8663-864cdd578306
+          enabled: true
+
+resources: # CloudFormation resources definition
+  Resources: 
+    ColorsDynamoDBTable: 
+      Type: "AWS::DynamoDB::Table"
+      Properties: 
+        AttributeDefinitions: 
+          - AttributeName: Color
+            AttributeType: S
+        KeySchema: 
+          - AttributeName: Color
+            KeyType: HASH
+        ProvisionedThroughput: 
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        SSESpecification: 
+          SSEEnabled: true

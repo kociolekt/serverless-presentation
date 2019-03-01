@@ -1,0 +1,31 @@
+service:
+  name: fast-example # service name - this is going to be part of functions/resource names
+
+provider:
+  name: aws # which cloud provider
+  runtime: nodejs8.10 # what type of runtime https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
+  stage: ${opt:stage, 'dev'} # if it's development version then stage can be dev; prod for production qa/test for testing etc
+  stackName: ${self:service}-${self:provider.stage} # stack definition is remembered under that name
+  region: ${opt:region, 'us-east-1'} # region in which our resources are defined
+  profile: serverless-terminator # The default profile to use with this service
+
+functions: # functions definition
+  skill:
+    handler: index.handler
+
+resources: # CloudFormation resources definition
+  Resources: 
+    ColorsDynamoDBTable: 
+      Type: "AWS::DynamoDB::Table"
+      Properties: 
+        AttributeDefinitions: 
+          - AttributeName: Color
+            AttributeType: S
+        KeySchema: 
+          - AttributeName: Color
+            KeyType: HASH
+        ProvisionedThroughput: 
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        SSESpecification: 
+          SSEEnabled: true
