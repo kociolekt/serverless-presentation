@@ -1,9 +1,9 @@
 {
-  "name": "reveal.js",
+  "name": "serverless-presentation",
   "version": "3.7.0",
-  "description": "The HTML Presentation Framework",
+  "description": "Serverless Presentation - Begginners",
   "homepage": "http://revealjs.com",
-  "subdomain": "revealjs",
+  "subdomain": "serverless-presentation",
   "main": "js/reveal.js",
   "scripts": {
     "test": "grunt test",
@@ -11,13 +11,11 @@
     "build": "grunt"
   },
   "author": {
-    "name": "Hakim El Hattab",
-    "email": "hakim.elhattab@gmail.com",
-    "web": "http://hakim.se"
+    "name": "Tomasz Kociołek"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/hakimel/reveal.js.git"
+    "url": "git@github.com:kociolekt/serverless-presentation.git"
   },
   "engines": {
     "node": ">=4.0.0"
