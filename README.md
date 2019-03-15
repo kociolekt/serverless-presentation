@@ -11,7 +11,7 @@ Resources:
 
 Serverless - https://serverless.com/
 
-Configuration note - https://github.com/kociolekt/cli-alexa-skill/blob/master/NOTES.md
+Configuration note - https://github.com/kociolekt/alexa-command-line-skill/blob/master/NOTES.md
 
 Example 1 - https://github.com/kociolekt/serverless-presentation/tree/master/example
 
